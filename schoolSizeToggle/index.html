@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Toggle interactions</title>
+<title>School Size 2562</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css" rel="stylesheet" />
@@ -18,7 +18,7 @@
         font-weight: 600;
         position: absolute;
         top: 10px;
-        right: 10px;
+        left: 10px;
         z-index: 1;
         border-radius: 3px;
         max-width: 20%;
@@ -63,38 +63,55 @@
 </style>
 <div id="map"></div>
 <nav id="listing-group" class="listing-group">
-    <input type="checkbox" id="verySmall" checked="checked" />
-    <label for="verySmall">โรงเรียนเล็ก(ต่ำกว่า 40)</label>
-    <input type="checkbox" id="small"  />
-    <label for="small">โรงเรียนเล็ก (ต่ำกว่า 120)</label>
-    <input type="checkbox" id="middle" />
-    <label for="middle">โรงเรียนขนาดกลาง</label>
-    <input type="checkbox" id="large"  />
-    <label for="large">โรงเรียนขนาดใหญ่</label>
-    <input type="checkbox" id="veryLarge" />
-    <label for="veryLarge">โรงเรียนขนาดใหญ่พิเศษ</label>
+    <input type="checkbox" checked="checked" id="ขนาดเล็ก"  />
+    <label for="ขนาดเล็ก">โรงเรียนขนาดเล็ก</label>
+    <input type="checkbox" id="ขนาดกลาง" />
+    <label for="ขนาดกลาง">โรงเรียนขนาดกลาง</label>
+    <input type="checkbox" id="ขนาดใหญ่"  />
+    <label for="ขนาดใหญ่">โรงเรียนขนาดใหญ่</label>
+    <input type="checkbox" id="ขนาดใหญ่พิเศษ" />
+    <label for="ขนาดใหญ่พิเศษ">โรงเรียนขนาดใหญ่พิเศษ</label>
 
 </nav>
 
 <script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoaXdhdGJpbGwiLCJhIjoiY2s3YWZiYW43MHRldTNtbnUxNXFxbjB5eSJ9.vNS0iagK7dEGlQzqXeZeWg';
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoaXdhdGJpbGwiLCJhIjoiY2s3YWZiYW43MHRldTNtbnUxNXFxbjB5eSJ9.vNS0iagK7dEGlQzqXeZeWg';
     var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-77.04, 38.907],
-        zoom: 11.15
+        style: 'mapbox://styles/athiwatbill/ck81e319m3ekd1is0b30ammy6',
+            bearing: -0,
+            center: [101.0993445, 5.734261254],
+            zoom: 4,
+            speed: 0.8,
+            pitch: 0
     });
+
+   map.on('style.load', function () { 
+    map.setFilter('thaiSchool', ["==", 'ขนาดสถานศึกษา', 'ขนาดเล็ก']); 
+   })
+
+    var filters = new Set()
+    filters.add('ขนาดเล็ก')
 
     document
         .getElementById('listing-group')
         .addEventListener('change', function(e) {
             var handler = e.target.id;
-            // if (e.target.checked) {
-            //     map[handler].enable();
-            // } else {
-            //     map[handler].disable();
-            // }
+
+            if (e.target.checked) {
+                filters.add(handler)
+            } else {
+                filters.delete(handler)
+            }
+
+            let small = filters.has('ขนาดเล็ก')?'ขนาดเล็ก':'xx'
+            let medium = filters.has('ขนาดกลาง')?'ขนาดกลาง':'xx'
+            let large = filters.has('ขนาดใหญ่')?'ขนาดใหญ่':'xx'
+            let veryLarge = filters.has('ขนาดใหญ่พิเศษ')?'ขนาดใหญ่พิเศษ':'xx'
+            map.setFilter('thaiSchool', ["in", 'ขนาดสถานศึกษา', small, medium, large, veryLarge]);   
+
         });
+    
 </script>
 
 </body>
