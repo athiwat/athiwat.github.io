@@ -57,7 +57,7 @@
 <div class="map-overlay top">
     <div class="map-overlay-inner">
         <h2>Small School</h2>
-        <label id="month">2556</label>
+        <label id="year">2556</label>
         <input id="slider" type="range" min="0" max="6" step="1" value="0" />
     </div>
 <!--     <div class="map-overlay-inner">
@@ -69,15 +69,18 @@
 </div>
 
 <script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoaXdhdGJpbGwiLCJhIjoiY2s3YWZiYW43MHRldTNtbnUxNXFxbjB5eSJ9.vNS0iagK7dEGlQzqXeZeWg';
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoaXdhdGJpbGwiLCJhIjoiY2s3YWZiYW43MHRldTNtbnUxNXFxbjB5eSJ9.vNS0iagK7dEGlQzqXeZeWg';
     var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/light-v10',
-        center: [31.4606, 20.7927],
-        zoom: 0.5
+        style: 'mapbox://styles/athiwatbill/ck8fm7nwa2xh81iofsrw6knwz',
+            bearing: -0,
+            center: [ 100.5018, 13.7563],
+            zoom: 7,
+            speed: 0.8,
+            pitch: 0
     });
 
-    var months = [
+    var years = [
         '2556',
         '2557',
         '2558',
@@ -87,23 +90,90 @@
         '2562'
     ];
 
-    function filterBy(month) {
-        var filters = ['==', 'month', month];
-        // map.setFilter('earthquake-circles', filters);
-        // map.setFilter('earthquake-labels', filters);
+    function filterBy(year) {
+        document.getElementById('year').textContent = years[year];
+    }
 
-        // Set the label to the month
-        document.getElementById('month').textContent = months[month];
+    function checkVisibility() {
+        console.log(map.getLayoutProperty('2562', 'visibility'));
+        console.log(map.getLayoutProperty('2561', 'visibility'));
+        console.log(map.getLayoutProperty('2560', 'visibility'));
+        console.log(map.getLayoutProperty('2559', 'visibility'));
+        console.log(map.getLayoutProperty('2558', 'visibility'));
+        console.log(map.getLayoutProperty('2557', 'visibility'));
+        console.log(map.getLayoutProperty('2556', 'visibility'));
+    }
+
+    function makeActive(activeYear) {
+        map.setLayoutProperty(activeYear, 'visibility', 'visible');
+
+        for (let year in years) {  
+            if (years[year] != activeYear) {
+                        map.setLayoutProperty(years[year], 'visibility', 'none');
+    
+            }
+        }
     }
 
         document
             .getElementById('slider')
             .addEventListener('input', function(e) {
-            var month = parseInt(e.target.value, 7);
-                        filterBy(month);
+            var year = parseInt(e.target.value, 7);
+                        filterBy(year);
+
+                        console.log(years[year])
+                        makeActive(years[year])
+                        map.setLayoutProperty(years[year], 'visibility', 'visible');
+
+                        checkVisibility();
+
                     });
 
-    map.on('load', function() {
+  map.on('load', function () {
+    makeActive('2556')
+
+    // map.setLayoutProperty("2562", 'visibility', 'none');
+    // map.setLayoutProperty("2561", 'visibility', 'none');
+    // map.setLayoutProperty("2560", 'visibility', 'none');
+    // map.setLayoutProperty("2559", 'visibility', 'none');
+    // map.setLayoutProperty("2558", 'visibility', 'none');
+    // map.setLayoutProperty("2557", 'visibility', 'none');
+    // map.setLayoutProperty("2556", 'visibility', 'visible');
+
+
+    checkVisibility();
+
+
+
+    // var dataLayers = ['','','','','','',''];
+    // var colors = ['#FF0000', '#FFA500', '#FFFFFF',  '#fefefe','#22ddff', '#ffcccc','#ffff00'];
+    // for (i = 0; i < dataLayers.length; i++) {
+    //   var layer = dataLayers[i];
+    //   var color = colors[i];
+    //   var item = document.createElement('div');
+    //   var key = document.createElement('span');
+    //   key.className = 'legend-key';
+    //   key.style.backgroundColor = color;
+
+    //   var value = document.createElement('span');
+    //   value.innerHTML = layer;
+    //   if(color=='#FFFFFF'){
+    //     var img = document.createElement('img');
+    //     img.src = "Images/icons/hospital-15.svg"
+    //     img.style="height:20px;width:20px";
+    //     item.appendChild(img);
+    //   }
+    //   else
+    //     item.appendChild(key);
+
+    //   //item.appendChild(value);
+    //   legend.appendChild(item);
+
+    });
+
+    //add scale to map                
+
+    // map.on('load', function() {
         // Data courtesy of http://earthquake.usgs.gov/
         // Query for significant earthquakes in 2015 URL request looked like this:
         // http://earthquake.usgs.gov/fdsnws/event/1/query
@@ -186,7 +256,7 @@
 
         //     }
         // );
-    });
+    // });
 </script>
 
 </body>
