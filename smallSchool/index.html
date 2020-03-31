@@ -7,7 +7,6 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
 	<link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <style>
         body { margin:0; padding:0; }
@@ -15,12 +14,36 @@
     </style>
 </head>
 <body>
+
 <style>
-	#map {
+#map {
     position: fixed;
     width:50%;
 }
-</style>	
+#features {
+    width: 50%;
+    margin-left: 50%;
+    font-family: Tw Cen MT;
+    overflow-y: scroll;
+    background-color: #fafafa;
+}
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    font-size: 20px;
+}
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 1000px;
+}
+</style>
+
+<div id='map'></div>
 <div id='features'>
     <section id='welcome' class='active'>
         <h3>โรงเรียนเล็กจะหายไป...ใครตัดสิน</h3>
@@ -28,58 +51,162 @@
 
 คำถามหนึ่งที่ยืดเยื้อนับตั้งแต่วันนั้นจนถึงวันนี้คือจะออกแบบโรงเรียนอย่างไร เพื่อตอบโจทย์การศึกษาของประชาชนและโลกที่เปลี่ยนแปลงไปอย่างรวดเร็วอย่างมีประสิทธิภาพ และดูเหมือนกลายเป็นว่า “โรงเรียนขนาดเล็ก” ที่มีอยู่จำนวนมากและมีแนวโน้มเพิ่มขึ้นในขณะนั้น (และมีนโยบายให้เริ่มยุบเลิกตั้งแต่ปี 2536) เริ่มถูกตั้งคำถามจากส่วนกลางมากขึ้นเรื่อยๆว่ายังจำเป็นและคุ้มค่าหรือไม่?
 
+จำนวนโรงเรียน งบประมาณ การจัดสรรงบแบบต่อจำนวนเด็ก โรงเรียนใหญ่
+
 ด้านหนึ่งกระทรวงศึกษาธิการมักให้เหตุผลของยุบเลิกหรือควบรวมโรงเรียนขนาดเล็กว่าเป็นโรงเรียนที่ด้อยคุณภาพกว่าโรงเรียนขนาดใหญ่ เนื่องจากการบริหารจัดการครูและนักเรียนที่ยากลำบากกว่าและมักขาดแคลนครูที่เชี่ยวชาญในแต่ละวิชา ขณะที่การบริหารจัดการโรงเรียนก็ขาดประสิทธิภาพ เนื่องจากงบประมาณที่น้อยกว่าและมีต้นทุนต่อหัวนักเรียนที่สูง จนไม่สามารถจัดการศึกษาที่ดีให้แกเด็กนักเรียนได้ จนเหมาะสมและจำเป็นต้องยุบเลิกหรือควบรวมกับโรงเรียนอื่นๆ 
 
 อีกด้านหนึ่งหลายชุมชนกลับคัดค้านว่าไม่จำเป็นเสมอไปว่าโรงเรียนขนาดเล็กจะด้อยคุณภาพกว่า หลายโรงเรียนสามารถจัดการเรียนการสอนที่มีคุณภาพมากกว่าโรงเรียนขนาดใหญ่ด้วยซ้ำ ขณะเดียวกัน การย้ายโรงเรียนออกไปจากชุมชนนอกจากต้นทุนการเดินทางจะมากขึ้นแล้ว ความผูกพันธ์ของชุมชนกับโรงเรียน 
 
 เหตุผลของทั้งสองฝั่งเป็นเหมือนคนละด้านของเหรียญที่ต้องหาจุดสมดุลระหว่างความคุ้มค่าและคุณค่าทางจิตใจของโรงเรียนที่มีต่อชุมชน คำถามคือแล้วใครจะตัดสิน...?
 </p>
-        
     </section>
-</div>
-    <section id='section2' class='active'>
-    	<div class="container">
-	        <div class="row">
-			  <div class="column">
-		         <h3>ยุบ</h3>
-	        	 <p>ทำไมถึงยุบ</p>
-	          </div>	 	  
-			  <div class="column">
-			  	 <h3>ไม่ยุบ</h3>
-	             <p>ทำไมถึงไม่ควรยุบ</p>		
-			  </div>   	
-			</div>  
-		</div>
+    <section id='section1' class='active'>
+        <h3>ปัญหาในการบริหารโรงเรียน</h3>
+        <p>ขนาด</p>
+        <p>งบประมาณ</p> 
+        <p>จำนวนนักเรียนลดน้อยลงทุกปี</p>       
+    </section>
+    <section id='section2' >    	
+        <h3>ปัจจัยที่มีผลต่อโรงเรียนเล็ก</h3>
+        <p>รัฐบาล</p>
+        <p>ชุมชน</p>
+        <p>โรงเรียน</p>
+    </section>
+    <section id='section3'>
+        <h3>รัฐบาล</h3>
+        <p>นโยบายควบรวม</p>        
     </section>
     <section id='section4'>
-        <h3>รร เล็ก</h3>
-        <div> <iframe src="../smallSchoolTimeline/index.html" width="100%" height="400px"></iframe></div>   
-    </section>  
+        <h3>ตัวอย่าง ปทุมธานี</h3>
+    </section>
     <section id='section5'>
-	        <h3>รร เล็กทั่วประเทศ</h3>
-	        <div class="sidebar"></div>
-       	    <div> <iframe src="../schoolSizeToggle/index.html" width="100%" height="400px"></iframe></div>   
+        <h3>ชุมชน</h3>
+        <p>ส่งเสริม</p>
+        <p>ไม่ส่งเสริม</p>
     </section>
     <section id='section6'>
-        <h3>Case study</h3>
-        <p>ปทุมธานี</p>
+        <h3>โรงเรียน</h3>
+        <p>ปรับปรุงการบริหาร</p>
+        <p>ปรับปรุงการเรียนการสอน</p>
     </section>
     <section id='section7'>
+        <h3>Testinomial</h3>
+        <p>TDRI data</p>
+    </section>
+    <section id='section8'>
         <h3>Thank you</h3>
-        <p>Data Journalism Workshop, TDRI</p>
+        <p>Data Journalism Workshop</p>
     </section>
 </div>
 <script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoaXdhdGJpbGwiLCJhIjoiY2s3YWZiYW43MHRldTNtbnUxNXFxbjB5eSJ9.vNS0iagK7dEGlQzqXeZeWg';
-	var map = new mapboxgl.Map({
-	    container: 'map',
-	    style: 'mapbox://styles/athiwatbill/ck81e319m3ekd1is0b30ammy6',
-	        bearing: -0,
-	        center: [101.0993445, 5.734261254],
-	        zoom: 2,
-	        speed: 0.8,
-	        pitch: 0
-	});
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoaXdhdGJpbGwiLCJhIjoiY2s3YWZiYW43MHRldTNtbnUxNXFxbjB5eSJ9.vNS0iagK7dEGlQzqXeZeWg';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/athiwatbill/ck8g804954cf51invam7l3zv9',
+        bearing: -0,
+        center: [101.0993445, 11.034261254],
+        zoom: 4.9,
+        speed: 0.8,
+        pitch: 0
+});
+var chapters = {
+    'welcome': {
+        bearing: -0,
+        center: [101.0993445, 11.034261254],
+        zoom: 4.9,
+        speed: 0.8,
+        pitch: 0,        
+        layer: 'schoolInfo'
+
+    },
+    'section1': {
+        center: [101.0993445, 11.034261254],
+        zoom: 4.9,
+        speed: 0.8,
+        pitch: 0,
+        layer: 'schoolInfo'
+    },
+    'section2': {
+        center: [101.0993445, 5.734261254],
+        bearing: 54.40,
+        zoom: 12.59,
+        speed: 0.6,
+        pitch: 44.50,
+        layer: 'smallSchool'
+    },
+    'section3': {
+        bearing: 12.80,
+        center: [101.0993445, 5.734261254],
+        zoom: 13.18,
+        speed: 0.6,
+        pitch: 0.00,
+        layer: 'smallSchool'
+    },
+    'section4': {
+        bearing: 60,
+        center: [101.0993445, 5.734261254],
+        zoom: 16.57,
+        speed: 0.6,
+        pitch: 45,
+        layer: 'smallSchool'
+    },
+    'section5': {
+        bearing: 15.20,
+        center:  [101.0993445, 5.734261254],
+        zoom: 10.56,
+        pitch: 40.50,
+        speed: 0.6,
+        layer: 'smallSchool'
+    },
+    'section6': {
+        bearing: 0,
+        center: [101.0993445, 5.734261254],
+        zoom: 5.53,
+        pitch: 0,
+        speed: 0.6,
+        layer: 'smallSchool'
+    },
+    'section7': {
+        bearing: -0,
+        center: [101.0993445, 5.734261254],
+        zoom: 1.18,
+        speed: 0.8,
+        pitch: 0,
+        layer: 'smallSchool'
+    },
+    'section8': {
+        bearing: -0,
+        center: [101.0993445, 5.734261254],
+        zoom: 1.18,
+        speed: 0.8,
+        pitch: 0,
+        layer: 'smallSchool'
+    },
+};
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var chapterNames = Object.keys(chapters);
+    for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+        }
+    }
+};
+var activeChapterName = 'baker';
+function setActiveChapter(chapterName) {
+    if (chapterName === activeChapterName) return;
+    map.flyTo(chapters[chapterName]);
+    document.getElementById(chapterName).setAttribute('class', 'active');
+    document.getElementById(activeChapterName).setAttribute('class', '');
+    activeChapterName = chapterName;
+}
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
 </script>
 </body>
 </html>
