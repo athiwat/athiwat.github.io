@@ -66,34 +66,34 @@ section:last-child {
         <p>งบประมาณ</p> 
         <p>จำนวนนักเรียนลดน้อยลงทุกปี</p>       
     </section>
-    <section id='section2' >    	
+    <section id='section2' class='active' >    	
         <h3>ปัจจัยที่มีผลต่อโรงเรียนเล็ก</h3>
         <p>รัฐบาล</p>
         <p>ชุมชน</p>
         <p>โรงเรียน</p>
     </section>
-    <section id='section3'>
+    <section id='section3' class='active'>
         <h3>รัฐบาล</h3>
         <p>นโยบายควบรวม</p>        
     </section>
-    <section id='section4'>
+    <section id='section4' class='active'>
         <h3>ตัวอย่าง ปทุมธานี</h3>
     </section>
-    <section id='section5'>
+    <section id='section5' class='active'>
         <h3>ชุมชน</h3>
         <p>ส่งเสริม</p>
         <p>ไม่ส่งเสริม</p>
     </section>
-    <section id='section6'>
+    <section id='section6' class='active'>
         <h3>โรงเรียน</h3>
         <p>ปรับปรุงการบริหาร</p>
         <p>ปรับปรุงการเรียนการสอน</p>
     </section>
-    <section id='section7'>
+    <section id='section7' class='active'>
         <h3>Testinomial</h3>
         <p>TDRI data</p>
     </section>
-    <section id='section8'>
+    <section id='section8' class='active'>
         <h3>Thank you</h3>
         <p>Data Journalism Workshop</p>
     </section>
@@ -109,6 +109,22 @@ var map = new mapboxgl.Map({
         speed: 0.8,
         pitch: 0
 });
+
+var layers = [
+        'SchoolInfo',
+        'SmallSchool'
+    ];
+
+function makeActive(activeLayer) {
+    map.setLayoutProperty(activeLayer, 'visibility', 'visible');
+    for (let layer in layers) {  
+        if (layers[layer] != activeLayer) {
+            map.setLayoutProperty(layers[layer], 'visibility', 'none');
+        }
+    }
+}    
+
+
 var chapters = {
     'welcome': {
         bearing: -0,
@@ -116,7 +132,7 @@ var chapters = {
         zoom: 4.9,
         speed: 0.8,
         pitch: 0,        
-        layer: 'schoolInfo'
+        layer: 'SchoolInfo'
 
     },
     'section1': {
@@ -124,7 +140,7 @@ var chapters = {
         zoom: 4.9,
         speed: 0.8,
         pitch: 0,
-        layer: 'schoolInfo'
+        layer: 'SchoolInfo'
     },
     'section2': {
         center: [101.0993445, 5.734261254],
@@ -132,7 +148,7 @@ var chapters = {
         zoom: 12.59,
         speed: 0.6,
         pitch: 44.50,
-        layer: 'smallSchool'
+        layer: 'SmallSchool'
     },
     'section3': {
         bearing: 12.80,
@@ -140,7 +156,7 @@ var chapters = {
         zoom: 13.18,
         speed: 0.6,
         pitch: 0.00,
-        layer: 'smallSchool'
+        layer: 'SmallSchool'
     },
     'section4': {
         bearing: 60,
@@ -148,7 +164,7 @@ var chapters = {
         zoom: 16.57,
         speed: 0.6,
         pitch: 45,
-        layer: 'smallSchool'
+        layer: 'SmallSchool'
     },
     'section5': {
         bearing: 15.20,
@@ -156,7 +172,7 @@ var chapters = {
         zoom: 10.56,
         pitch: 40.50,
         speed: 0.6,
-        layer: 'smallSchool'
+        layer: 'SmallSchool'
     },
     'section6': {
         bearing: 0,
@@ -164,7 +180,7 @@ var chapters = {
         zoom: 5.53,
         pitch: 0,
         speed: 0.6,
-        layer: 'smallSchool'
+        layer: 'SmallSchool'
     },
     'section7': {
         bearing: -0,
@@ -172,7 +188,7 @@ var chapters = {
         zoom: 1.18,
         speed: 0.8,
         pitch: 0,
-        layer: 'smallSchool'
+        layer: 'SmallSchool'
     },
     'section8': {
         bearing: -0,
@@ -180,14 +196,16 @@ var chapters = {
         zoom: 1.18,
         speed: 0.8,
         pitch: 0,
-        layer: 'smallSchool'
+        layer: 'SmallSchool'
     },
 };
 // On every scroll event, check which element is on screen
 window.onscroll = function() {
     var chapterNames = Object.keys(chapters);
+
     for (var i = 0; i < chapterNames.length; i++) {
         var chapterName = chapterNames[i];
+
         if (isElementOnScreen(chapterName)) {
             setActiveChapter(chapterName);
             break;
@@ -196,17 +214,29 @@ window.onscroll = function() {
 };
 var activeChapterName = 'baker';
 function setActiveChapter(chapterName) {
+    console.log('setActiveChapter ' + chapterName)
+        console.log('activeChapterName ' + activeChapterName)
+
     if (chapterName === activeChapterName) return;
     map.flyTo(chapters[chapterName]);
     document.getElementById(chapterName).setAttribute('class', 'active');
-    document.getElementById(activeChapterName).setAttribute('class', '');
+        // document.getElementById(activeChapterName).setAttribute('class', '');
+
+    // document.getElementById(activeChapterName).setAttribute('class', '');
     activeChapterName = chapterName;
+
+    makeActive((chapters[chapterName]).layer)
 }
 function isElementOnScreen(id) {
     var element = document.getElementById(id);
     var bounds = element.getBoundingClientRect();
     return bounds.top < window.innerHeight && bounds.bottom > 0;
 }
+
+  map.on('load', function () {
+    makeActive('SchoolInfo')
+    });
+
 </script>
 </body>
 </html>
