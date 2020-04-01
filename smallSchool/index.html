@@ -114,7 +114,9 @@ var layers = [
         'SchoolInfo',
         'SmallSchool',
         'ThankYou',
-        'Case'
+        'Case',
+        'Route',
+        'Innovation',
     ];
 
 function makeActive(activeLayer) {
@@ -170,19 +172,19 @@ var chapters = {
     },
     'section5': {
         bearing: 15.20,
-        center:  [101.0993445, 11.034261254],
+        center:  [100.690822, 14.073545],
         zoom: 10.56,
         pitch: 40.50,
         speed: 0.6,
-        layer: 'SmallSchool'
+        layer: 'Route'
     },
     'section6': {
         bearing: 0,
         center: [101.0993445, 11.034261254],
-        zoom: 5.53,
+        zoom: 4.9,
         pitch: 0,
         speed: 0.6,
-        layer: 'SmallSchool'
+        layer: 'Innovation'
     },
     'section7': {
         bearing: 0,
@@ -216,8 +218,8 @@ window.onscroll = function() {
 };
 var activeChapterName = 'baker';
 function setActiveChapter(chapterName) {
-    console.log('setActiveChapter ' + chapterName)
-        console.log('activeChapterName ' + activeChapterName)
+    // console.log('setActiveChapter ' + chapterName)
+        // console.log('activeChapterName ' + activeChapterName)
 
     if (chapterName === activeChapterName) return;
     map.flyTo(chapters[chapterName]);
@@ -236,8 +238,50 @@ function isElementOnScreen(id) {
 }
 
   map.on('load', function () {
-    makeActive('SchoolInfo')
-    });
+ 
+  
+
+        // map.addSource('route', {
+        // 'type': 'geojson',
+        // 'data': {
+        // 'type': 'Feature',
+        // 'properties': {},
+        // 'geometry': {
+        // 'type': 'LineString',
+        // 'coordinates': [
+        // [101.0993445, 11.034261254],
+        // [100.690822, 14.073545]
+        // ]
+        // }
+        // }
+        // });
+
+        // map.addLayer({
+        // 'id': 'Route',
+        // 'type': 'line',
+        // 'source': 'route',
+        // 'layout': {
+        // 'line-join': 'round',
+        // 'line-cap': 'round'
+        // },
+        // 'paint': {
+        // 'line-color': '#888',
+        // 'line-width': 8
+        // }
+        // });
+
+        makeActive('SchoolInfo')
+
+        });
+
+ map.on('styledata', function() {
+       console.log('--------')
+       console.log(map.getStyle().layers)
+   // makeActive('SchoolInfo')
+ });
+
+
+
 
 </script>
 </body>
