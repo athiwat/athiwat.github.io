@@ -90,12 +90,12 @@ section:last-child {
         <p>ปรับปรุงการเรียนการสอน</p>
     </section>
     <section id='section7' class='active'>
-        <h3>Testinomial</h3>
-        <p>TDRI data</p>
-    </section>
-    <section id='section8' class='active'>
         <h3>Thank you</h3>
         <p>Data Journalism Workshop</p>
+    </section>
+    <section id='section8' class='active'>
+        <h3>Reference</h3>
+        <p>ที่มาของข้อมูลทั้งหลาย</p>
     </section>
 </div>
 <script>
@@ -113,7 +113,8 @@ var map = new mapboxgl.Map({
 var layers = [
         'SchoolInfo',
         'SmallSchool',
-        'ThankYou'
+        'ThankYou',
+        'Case'
     ];
 
 function makeActive(activeLayer) {
@@ -153,23 +154,23 @@ var chapters = {
     },
     'section3': {
         bearing: 12.80,
-        center: [101.0993445, 5.734261254],
+        center: [101.0993445, 11.034261254],
         zoom: 13.18,
         speed: 0.6,
         pitch: 0.00,
         layer: 'SmallSchool'
     },
     'section4': {
-        bearing: 60,
-        center: [101.0993445, 5.734261254],
-        zoom: 16.57,
+        bearing: -40,
+        center: [100.690822, 14.073545],
+        zoom: 10,
         speed: 0.6,
-        pitch: 45,
-        layer: 'SmallSchool'
+        pitch: -60,
+        layer: 'Case'
     },
     'section5': {
         bearing: 15.20,
-        center:  [101.0993445, 5.734261254],
+        center:  [101.0993445, 11.034261254],
         zoom: 10.56,
         pitch: 40.50,
         speed: 0.6,
@@ -177,7 +178,7 @@ var chapters = {
     },
     'section6': {
         bearing: 0,
-        center: [101.0993445, 5.734261254],
+        center: [101.0993445, 11.034261254],
         zoom: 5.53,
         pitch: 0,
         speed: 0.6,
