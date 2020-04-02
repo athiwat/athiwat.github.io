@@ -103,6 +103,11 @@ img.logo {
 }
 
 </style>
+<script>
+    function loadCase(caseNo) {
+        map.setFilter('Case', ["in", 'ToStay', '0.00', caseNo]); 
+
+}</script>
 
 <div id='map'></div>
 <div id='features'>
@@ -176,6 +181,8 @@ img.logo {
             <h1 class="header blue">กรณีศึกษา ปทุมธานี</h1>
             <div>
                 <p>นอกจากนี้ การ “เลือก” ของรัฐอาจจะมีหลายแบบ และในแต่ละแบบย่อมต้องมีผลกระทบกับผู้คนที่แตกต่างกันด้วย ไม่ว่าจะเป็นต้นทุนการเดินทาง การประหยัดจากขนาดที่เกิดขึ้นในแต่ละโรงเรียน ฯลฯ</p>
+                <button type="button" class="btn btn-outline-warning" onclick="loadCase('1.00')">การจัดการกรณีที่ 1: ระยะห่างน้อย</button>
+                <button type="button" class="btn btn-outline-info" onclick="loadCase('2.00')">การจัดการกรณีที่ 2: ระยะห่างปานกลาง</button>
             </div>
         </div>
     </section>
@@ -430,6 +437,9 @@ function isElementOnScreen(id) {
     var bounds = element.getBoundingClientRect();
     return bounds.top < window.innerHeight && bounds.bottom > 0;
 }
+
+
+
 
   map.on('load', function () {
      var popup = new mapboxgl.Popup({
