@@ -7,14 +7,18 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
 	<link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mitr">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Athiti">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mitr|Athiti">
 
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
-        font-family: 'Mitr', serif;
-        font-size: 48px;
+        body, p {  font-family: 'Athiti', sans-serif; } 
+        h1, h2 {   font-family: 'Mitr', sans-serif;  text-align: center; } }
+        h3, h4, h5, h6 {   font-family: 'Athiti', sans-serif; text-align: center; }
+
+
     </style>
 </head>
 <body>
@@ -49,24 +53,49 @@ section:last-child {
     margin-bottom: 1000px;    
 }
 
+.title {
+    text-align: center;
+    
+}
+
+.title-blue{
+    color: #1A68FF;    
+}
+
+.title-black{
+    color: #000000;
+}
+
+.header {
+    text-align: center;
+}
+
+div {
+    padding: 25x 25x;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 </style>
 
 <div id='map'></div>
 <div id='features'>
     <section id='welcome' class='active'>
-        <div class='card'>
-            <h2>รายงานเรื่อง </h2>
-            <h3>โรงเรียนเล็กจะหายไป...ใครตัดสิน</h3>
+        <div>
+            <div> <h4 class="title">รายงานเรื่อง</h2></div>
             <br/>
             <br/>
             <img src="./images/Cover.png">
-            <h2>จัดทำโดย</h2>
-            <br/>
-            <br/>
-            <h3>Data Journalism Workshop 2020</h3>
-            <br/>
-            <br/>
+            <br><br>
+            <div><h4 class="title"> จัดทำโดย</h2></div>
+            <br/><br/>
+            <div><h2>Data Journalism Workshop 2020</h3><div>
+            <br/><br/>
         </div>
     </section>
     <section>
@@ -258,7 +287,7 @@ function isElementOnScreen(id) {
             closeOnClick: false
         });
 
-             map.on('mouseenter', 'Case', function(e) {
+        map.on('mouseenter', 'Case', function(e) {
             // Change the cursor style as a UI indicator.
             map.getCanvas().style.cursor = 'pointer';
 
@@ -271,6 +300,23 @@ function isElementOnScreen(id) {
         });
 
         map.on('mouseleave', 'Case', function() {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
+
+        map.on('mouseenter', 'SchoolInfo', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
+
+            // Populate the popup and set its coordinates
+            // based on the feature found.
+
+            popup.setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.name)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', 'SchoolInfo', function() {
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
@@ -310,8 +356,6 @@ function isElementOnScreen(id) {
         });
 
  map.on('styledata', function() {
-       console.log('--------')
-       console.log(map.getStyle().layers)
    // makeActive('SchoolInfo')
  });
 
