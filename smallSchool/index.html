@@ -287,6 +287,7 @@ var layers = [
         'Case',
         // 'Route',
         'Innovation',
+        'Question',
     ];
 
 function makeActive(activeLayer) {
@@ -383,9 +384,9 @@ var chapters = {
         bearing: -0,
         center: [101.0993445, 11.034261254],
         zoom: 4.9,
-        speed: 0.8,
+        speed: 7,
         pitch: 0,        
-        layer: 'SchoolInfo'
+        layer: 'Question'
     },    
     'thankYou': {
         bearing: 0,
@@ -480,6 +481,42 @@ function isElementOnScreen(id) {
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
+
+
+            map.loadImage(
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/1200px-Question_mark_alternate.svg.png',
+                function(error, image) {
+                    if (error) throw error;
+                    map.addImage('question', image);
+                    map.addSource('point', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'FeatureCollection',
+                            'features': [
+                                {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Point',
+                                        'coordinates': [101.0993445, 11.034261254]
+                                    }
+                                }
+                            ]
+                        }
+                    });
+                    map.addLayer({
+                        'id': 'Question',
+                        'type': 'symbol',
+                        'source': 'point',
+                        'layout': {
+                            'icon-image': 'question',
+                            'icon-size': 0.25
+                        }
+                    });
+                }
+            );
+  
+
+
   
 
         // map.addSource('route', {
