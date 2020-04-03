@@ -472,7 +472,6 @@ var layers = [
         'SchoolBySize',
         'Kangjun',
         'Trend',
-        '"land"',
     ];
 
 function makeActive(activeLayer) {
@@ -566,12 +565,12 @@ var chapters = {
         layer: 'Innovation'
     },
     'summary': {
-        bearing: -0,
+        bearing: 0,
         center: [101.0993445, 11.034261254],
         zoom: 4.9,
         speed: 5,
         pitch: 0,        
-        layer: 'land'
+        layer: 'Innovation'
     },    
     'thankYou': {
         bearing: 0,
@@ -584,9 +583,9 @@ var chapters = {
     'reference': {
         bearing: 0,
         center: [100.577983, 13.753662],
-        zoom: 10.7,
+        zoom: 11,
         speed: 5,
-        pitch: -40,
+        pitch: 0,
         layer: 'ThankYou'
     },
 };
@@ -634,61 +633,61 @@ function isElementOnScreen(id) {
             closeOnClick: false
         });
 
-        map.on('mouseenter', 'CasePatum', function(e) {
-            // Change the cursor style as a UI indicator.
-            map.getCanvas().style.cursor = 'pointer';
+        // map.on('mouseenter', 'CasePatum', function(e) {
+        //     // Change the cursor style as a UI indicator.
+        //     map.getCanvas().style.cursor = 'pointer';
 
-            // Populate the popup and set its coordinates
-            // based on the feature found.
+        //     // Populate the popup and set its coordinates
+        //     // based on the feature found.
 
-            popup.setLngLat(e.features[0].geometry.coordinates)
-                .setHTML(e.features[0].properties.OriginSchool)
-                .addTo(map);
-        });
+        //     popup.setLngLat(e.features[0].geometry.coordinates)
+        //         .setHTML(e.features[0].properties.OriginSchool)
+        //         .addTo(map);
+        // });
 
-        map.on('mouseleave', 'CasePatum', function() {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
-        });
+        // map.on('mouseleave', 'CasePatum', function() {
+        //     map.getCanvas().style.cursor = '';
+        //     popup.remove();
+        // });
 
-        map.on('mouseenter', 'SchoolBySize', function(e) {
-            // Change the cursor style as a UI indicator.
-            map.getCanvas().style.cursor = 'pointer';
+        // map.on('mouseenter', 'SchoolBySize', function(e) {
+        //     // Change the cursor style as a UI indicator.
+        //     map.getCanvas().style.cursor = 'pointer';
 
-            // Populate the popup and set its coordinates
-            // based on the feature found.
+        //     // Populate the popup and set its coordinates
+        //     // based on the feature found.
 
-            popup.setLngLat(e.features[0].geometry.coordinates)
-                .setHTML(e.features[0].properties.name)
-                .addTo(map);
-        });
+        //     popup.setLngLat(e.features[0].geometry.coordinates)
+        //         .setHTML(e.features[0].properties.name)
+        //         .addTo(map);
+        // });
 
-        map.on('mouseleave', 'SchoolBySize', function() {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
-        });
+        // map.on('mouseleave', 'SchoolBySize', function() {
+        //     map.getCanvas().style.cursor = '';
+        //     popup.remove();
+        // });
 
 
-            map.loadImage(
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/1200px-Question_mark_alternate.svg.png',
-                function(error, image) {
-                    if (error) throw error;
-                    map.addImage('question', image);
-                    map.addSource('point', {
-                        'type': 'geojson',
-                        'data': {
-                            'type': 'FeatureCollection',
-                            'features': [
-                                {
-                                    'type': 'Feature',
-                                    'geometry': {
-                                        'type': 'Point',
-                                        'coordinates': [101.0993445, 11.034261254]
-                                    }
-                                }
-                            ]
-                        }
-                    });
+            // map.loadImage(
+            //     'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/1200px-Question_mark_alternate.svg.png',
+            //     function(error, image) {
+            //         if (error) throw error;
+            //         map.addImage('question', image);
+            //         map.addSource('point', {
+            //             'type': 'geojson',
+            //             'data': {
+            //                 'type': 'FeatureCollection',
+            //                 'features': [
+            //                     {
+            //                         'type': 'Feature',
+            //                         'geometry': {
+            //                             'type': 'Point',
+            //                             'coordinates': [101.0993445, 11.034261254]
+            //                         }
+            //                     }
+            //                 ]
+            //             }
+            //         });
 
                     // map.addLayer({
                     //     'id': 'Question',
@@ -700,15 +699,15 @@ function isElementOnScreen(id) {
                     //         'icon-size': 0.25
                     //     }
                     // });
-                }
-            );
+                // }
+            // );
 
         makeActive('SchoolBySize')
 
         });
 
  map.on('styledata', function() {
-   console.log(map.getStyle().layers)
+   // console.log(map.getStyle().layers)
  });
 
 
