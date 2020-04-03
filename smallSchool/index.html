@@ -693,39 +693,72 @@ function isElementOnScreen(id) {
             closeOnClick: false
         });
 
-        // map.on('mouseenter', 'CasePatum', function(e) {
-        //     // Change the cursor style as a UI indicator.
-        //     map.getCanvas().style.cursor = 'pointer';
+        map.on('mouseenter', 'CasePatum', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
+            popup.setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.School + ', จำนวนนักเรียน ' +  e.features[0].properties.Student)
+                .addTo(map);
+        });
 
-        //     // Populate the popup and set its coordinates
-        //     // based on the feature found.
+        map.on('mouseleave', 'CasePatum', function() {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
 
-        //     popup.setLngLat(e.features[0].geometry.coordinates)
-        //         .setHTML(e.features[0].properties.OriginSchool)
-        //         .addTo(map);
-        // });
+        map.on('mouseenter', 'SchoolBySize', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
+            popup.setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.name  + ', จำนวนนักเรียน (ปี 2562) ' +  e.features[0].properties["2562"])
+                .addTo(map);
+        });
 
-        // map.on('mouseleave', 'CasePatum', function() {
-        //     map.getCanvas().style.cursor = '';
-        //     popup.remove();
-        // });
+        map.on('mouseleave', 'SchoolBySize', function() {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
 
-        // map.on('mouseenter', 'SchoolBySize', function(e) {
-        //     // Change the cursor style as a UI indicator.
-        //     map.getCanvas().style.cursor = 'pointer';
+       map.on('mouseenter', 'BigSmall', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
+            popup.setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.name  + ', จำนวนนักเรียน (ปี 2562) ' +  e.features[0].properties["2562"])
+                .addTo(map);
+        });
 
-        //     // Populate the popup and set its coordinates
-        //     // based on the feature found.
+        map.on('mouseleave', 'BigSmall', function() {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
 
-        //     popup.setLngLat(e.features[0].geometry.coordinates)
-        //         .setHTML(e.features[0].properties.name)
-        //         .addTo(map);
-        // });
+       map.on('mouseenter', 'Trend', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
+            popup.setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.name  + ', จำนวนนักเรียน (ปี 2562) ' +  e.features[0].properties["2562"])
+                .addTo(map);
+        });
 
-        // map.on('mouseleave', 'SchoolBySize', function() {
-        //     map.getCanvas().style.cursor = '';
-        //     popup.remove();
-        // });
+        map.on('mouseleave', 'Trend', function() {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
+
+       map.on('mouseenter', 'ThankYou', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
+            popup.setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.Website)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', 'ThankYou', function() {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });        
+
+
 
 
             // map.loadImage(
