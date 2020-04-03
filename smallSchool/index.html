@@ -37,10 +37,6 @@
 
 }
 
-/*body {
-    background-color: #293457; 
-}*/
-
 section {
     padding:  150px 100px;
     padding-top: 400px;
@@ -167,10 +163,14 @@ img.logo {
     background: #F85900;
 }
 
+button {
+    font-family: 'Athiti';
+}
+
 </style>
 <script>
     function loadCase(caseNo) {
-        map.setFilter('Case', ["in", 'ToStay', '0.00', caseNo]); 
+        map.setFilter('CasePatum', "==", 'Case', caseNo); 
 
 }</script>
 
@@ -311,8 +311,19 @@ img.logo {
             <h3 class="question">กรณีศึกษาการยุบและควบรวม: ปทุมธานี</h3>
             <div>
                 <p>นอกจากนี้ การ “เลือก” ของรัฐอาจจะมีหลายแบบ และในแต่ละแบบย่อมต้องมีผลกระทบกับผู้คนที่แตกต่างกันด้วย ไม่ว่าจะเป็นต้นทุนการเดินทาง การประหยัดจากขนาดที่เกิดขึ้นในแต่ละโรงเรียน ฯลฯ</p>
-                <button type="button" class="btn btn-outline-warning" onclick="loadCase('1.00')">การจัดการกรณีที่ 1: ระยะห่างน้อย</button>
-                <button type="button" class="btn btn-outline-info" onclick="loadCase('2.00')">การจัดการกรณีที่ 2: ระยะห่างปานกลาง</button>
+                <div class="container">
+                    <div class="row">
+                        <button type="button" class="btn btn-outline-warning btn-block" onclick="loadCase('0')">ก่อนควบรวม</button>
+                    </div>
+                    <div class="row">
+                         <button type="button" class="btn btn-outline-warning btn-block"  onclick="loadCase('1')">การจัดการกรณีที่ 1: ระยะห่างน้อย</button>   
+                    </div>
+                    <div class="row">
+                        <button type="button" class="btn btn-outline-warning btn-block"  onclick="loadCase('2')">การจัดการกรณีที่ 2: ระยะห่างปานกลาง</button>
+                    </div>                                        
+                </div>
+                
+                
             </div>
         </div>
     </section>
@@ -443,7 +454,6 @@ img.logo {
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoaXdhdGJpbGwiLCJhIjoiY2s3YWZiYW43MHRldTNtbnUxNXFxbjB5eSJ9.vNS0iagK7dEGlQzqXeZeWg';
 var map = new mapboxgl.Map({
     container: 'map',
-    // style: 'mapbox://styles/athiwatbill/ck8jpqukg1dgg1imhvcg67r23',
     style: 'mapbox://styles/athiwatbill/ck8kdo6sy08i01irlsrby9yk8',
 
         bearing: -0,
@@ -457,7 +467,7 @@ var layers = [
         // 'AllSchool',
         'BigSmall',
         'ThankYou',
-        'Case',
+        'CasePatum',
         'Innovation',
         'SchoolBySize',
         'Kangjun',
@@ -482,12 +492,12 @@ var chapters = {
         zoom: 4.9,
         speed: 10,
         pitch: 0,        
-        layer: 'land'
+        layer: 'SchoolBySize'
     },
     'background': {
         center: [101.0993445, 11.034261254],
         zoom: 4.9,
-        speed: 5,
+        speed: 4,
         pitch: 0,
         layer: 'BigSmall'
     },
@@ -503,7 +513,7 @@ var chapters = {
         bearing: 0,
         center: [101.0993445, 11.034261254],
         zoom: 4.9,
-        speed: 0.6,
+        speed: 4,
         pitch: 0.00,
         layer: 'Trend'
     },
@@ -519,7 +529,7 @@ var chapters = {
         bearing: 0,
         center: [101.0993445, 11.034261254],
         zoom: 4.9,
-        speed: 5,
+        speed: 4,
         pitch: 0.00,
         layer: 'BigSmall'
     },          
@@ -527,15 +537,15 @@ var chapters = {
         bearing: -40,
         center: [100.690822, 14.073545],
         zoom: 10,
-        speed: 5,
+        speed: 4,
         pitch: -60,
-        layer: 'Case'
+        layer: 'CasePatum'
     },
     'manage': {
         bearing: 0,
-        center: [101.0993445, 11.034261254],
-        zoom: 4.9,
-        speed: 5,
+        center: [102.028758, 18.138288],
+        zoom: 12,
+        speed: 4,
         pitch: 0.00,
         layer: 'Kangjun'
     },
@@ -544,7 +554,7 @@ var chapters = {
         center:  [102.028758, 18.138288],
         zoom: 12,
         pitch: 0,
-        speed: 5,
+        speed: 4,
         layer: 'Kangjun'
     },
     'innovation': {
@@ -561,7 +571,7 @@ var chapters = {
         zoom: 4.9,
         speed: 5,
         pitch: 0,        
-        layer: 'Empty'
+        layer: 'land'
     },    
     'thankYou': {
         bearing: 0,
@@ -573,7 +583,7 @@ var chapters = {
     },
     'reference': {
         bearing: 0,
-        center: [100.578000,13.904003],
+        center: [100.577983, 13.753662],
         zoom: 10.7,
         speed: 5,
         pitch: -40,
@@ -624,7 +634,7 @@ function isElementOnScreen(id) {
             closeOnClick: false
         });
 
-        map.on('mouseenter', 'Case', function(e) {
+        map.on('mouseenter', 'CasePatum', function(e) {
             // Change the cursor style as a UI indicator.
             map.getCanvas().style.cursor = 'pointer';
 
@@ -636,12 +646,12 @@ function isElementOnScreen(id) {
                 .addTo(map);
         });
 
-        map.on('mouseleave', 'Case', function() {
+        map.on('mouseleave', 'CasePatum', function() {
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
 
-        map.on('mouseenter', 'SchoolInfo', function(e) {
+        map.on('mouseenter', 'SchoolBySize', function(e) {
             // Change the cursor style as a UI indicator.
             map.getCanvas().style.cursor = 'pointer';
 
@@ -653,7 +663,7 @@ function isElementOnScreen(id) {
                 .addTo(map);
         });
 
-        map.on('mouseleave', 'SchoolInfo', function() {
+        map.on('mouseleave', 'SchoolBySize', function() {
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
@@ -692,41 +702,8 @@ function isElementOnScreen(id) {
                     // });
                 }
             );
-  
 
-
-  
-
-        // map.addSource('route', {
-        // 'type': 'geojson',
-        // 'data': {
-        // 'type': 'Feature',
-        // 'properties': {},
-        // 'geometry': {
-        // 'type': 'LineString',
-        // 'coordinates': [
-        // [101.0993445, 11.034261254],
-        // [100.690822, 14.073545]
-        // ]
-        // }
-        // }
-        // });
-
-        // map.addLayer({
-        // 'id': 'Route',
-        // 'type': 'line',
-        // 'source': 'route',
-        // 'layout': {
-        // 'line-join': 'round',
-        // 'line-cap': 'round'
-        // },
-        // 'paint': {
-        // 'line-color': '#888',
-        // 'line-width': 8
-        // }
-        // });
-
-        makeActive('BigSmall')
+        makeActive('SchoolBySize')
 
         });
 
